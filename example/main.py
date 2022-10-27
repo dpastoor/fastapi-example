@@ -3,6 +3,8 @@ import time
 import threading
 import logging
 import uuid
+import os
+import asyncio
 app = FastAPI()
 
 log = logging.getLogger(__name__)
@@ -25,8 +27,7 @@ def fsync():
     thread_id = threading.get_ident()
     log.debug("%s - start of sync on thread %s",request_id, thread_id)
     start_time = time.time()
-    time.sleep(2)
-    log.debug("%s about to return sync on thread %s", request_id, thread_id)
+    log.debug("%s about to return sync on thread %s, process_id: %s", request_id, thread_id, os.getpid())
     return {
         "start_time": start_time,
         "send_time": time.time(),
@@ -40,8 +41,8 @@ async def fasync():
     thread_id = threading.get_ident()
     log.debug("%s - start of async on thread %s",request_id, thread_id)
     start_time = time.time()
-    time.sleep(2)
-    log.debug("%s about to return async on thread %s", request_id, thread_id)
+    await asyncio.sleep(1)
+    log.debug("%s about to return async on thread %s, process_id: %s", request_id, thread_id, os.getpid())
     return {
         "start_time": start_time,
         "send_time": time.time(),
