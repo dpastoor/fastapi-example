@@ -5,6 +5,9 @@ import logging
 import uuid
 import os
 import asyncio
+import subprocess
+import uvicorn
+
 app = FastAPI()
 
 log = logging.getLogger(__name__)
@@ -17,6 +20,7 @@ ch.setFormatter(formatter)
 log.addHandler(ch)
 
 log.info("starting up")
+
 @app.get("/")
 async def root():
     return {"message": "Hello World"}
@@ -48,4 +52,12 @@ async def fasync():
         "send_time": time.time(),
         "thread": thread_id,
         "request_id" : request_id
-        }
+    }
+
+if __name__ == '__main__':
+    path, port = '', 8001
+  
+    if 'RS_SERVER_URL' in os.environ and os.environ['RS_SERVER_URL']:
+        path = subprocess.run(f'echo $(/usr/lib/rstudio-server/bin/rserver-url -l {port})',
+                             stdout=subprocess.PIPE, shell=True).stdout.decode().strip()
+    uvicorn.run(app, port = port, root_path = path)
