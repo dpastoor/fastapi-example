@@ -59,5 +59,7 @@ if __name__ == '__main__':
   
     if 'RS_SERVER_URL' in os.environ and os.environ['RS_SERVER_URL']:
         path = subprocess.run(f'echo $(/usr/lib/rstudio-server/bin/rserver-url -l {port})',
-                             stdout=subprocess.PIPE, shell=True).stdout.decode().strip()
+    # going to be lazy and not write a regex. The issue with a simple replace is // --> / will also replace https:// to https:/ so
+    # lets add an extra / there so then when we remove all // it'll go back to https://
+                             stdout=subprocess.PIPE, shell=True).stdout.decode().strip().replace("://", ":///").replace("//", "/")
     uvicorn.run(app, port = port, root_path = path)
