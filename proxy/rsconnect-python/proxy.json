@@ -1,0 +1,11 @@
+{
+    "https://maryland.positlabs.xyz/rsc/": {
+        "server_url": "https://maryland.positlabs.xyz/rsc/",
+        "filename": "/home/dpastoor/fastapi-example/proxy",
+        "app_url": "https://maryland.positlabs.xyz/rsc/content/15d79b9c-f5cd-45a5-af4e-317ba5fba7f9/",
+        "app_id": "15d79b9c-f5cd-45a5-af4e-317ba5fba7f9",
+        "app_guid": "15d79b9c-f5cd-45a5-af4e-317ba5fba7f9",
+        "title": "demo",
+        "app_mode": "python-fastapi"
+    }
+}
